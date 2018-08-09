@@ -1,10 +1,12 @@
 package ae.sample.nytimesarticles.ui.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import ae.sample.nytimesarticles.R;
+
+import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTICLE_TITLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,18 +15,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.app_title);
+
+        if (getIntent() != null && getIntent().hasExtra("data")) {
+            Bundle data = getIntent().getBundleExtra("data");
+            Log.d("asd", "ARTICLE_TITLE::" + data.getString(ARTICLE_TITLE));
+        }
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
 }

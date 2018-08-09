@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.util.List;
+
 import ae.sample.nytimesarticles.R;
 import ae.sample.nytimesarticles.model.PopularArticles;
-import ae.sample.nytimesarticles.presenter.ArticleClickListener;
+import ae.sample.nytimesarticles.ui.fragments.ArticleClickListener;
 import ae.sample.nytimesarticles.ui.fragments.ArticlesListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +47,7 @@ public class PopularArticlesRecyclerViewAdapter extends RecyclerView.Adapter<Pop
         holder.cvAgentItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                articleClickListener.onArticleCardClickListener(position);
+                articleClickListener.onArticleCardClickListener(popularArticles.get(position));
             }
         });
     }
@@ -53,6 +55,11 @@ public class PopularArticlesRecyclerViewAdapter extends RecyclerView.Adapter<Pop
     @Override
     public int getItemCount() {
         return popularArticles.size();
+    }
+
+    public void setArticlesList(List<PopularArticles> articlesList) {
+        popularArticles = articlesList;
+        notifyDataSetChanged();
     }
 
 
