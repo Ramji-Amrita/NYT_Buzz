@@ -22,7 +22,9 @@ import ae.sample.nytimesarticles.notifications.NotificationEventReceiver;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * Fragment to load the details of the article
+ */
 public class DetailArticleFragment extends Fragment {
 
     public static String ARTICLE_TITLE = "articleTitle";
@@ -44,6 +46,12 @@ public class DetailArticleFragment extends Fragment {
     private PopularArticles article;
     private ArticleModel articleModel;
 
+    /**
+     * Create a new instance with correct bundle properties.
+     *
+     * @param popularArticles Articles To Display
+     * @return DetailArticleFragment
+     */
     public static DetailArticleFragment newInstance(PopularArticles popularArticles) {
         DetailArticleFragment detailArticleFragment = new DetailArticleFragment();
         Bundle args = new Bundle();
@@ -76,6 +84,9 @@ public class DetailArticleFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Check whether the article is already in favourites.
+     */
     private void checkFavourites() {
         new Thread(new Runnable() {
             @Override
@@ -94,6 +105,9 @@ public class DetailArticleFragment extends Fragment {
         }).start();
     }
 
+    /**
+     * Initialize the UI on the page.
+     */
     private void initializeUI() {
         mProgressBar.setVisibility(View.VISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -101,6 +115,9 @@ public class DetailArticleFragment extends Fragment {
         webView.loadUrl(articleURLPath);
     }
 
+    /**
+     * Custom Webview client to display and hide the loader.
+     */
     public class ArticleBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -143,6 +160,9 @@ public class DetailArticleFragment extends Fragment {
         }
     }
 
+    /**
+     * Remove from favourites
+     */
     private void removeFavourite() {
         if (articleModel != null) {
             new Thread(new Runnable() {
@@ -155,6 +175,9 @@ public class DetailArticleFragment extends Fragment {
         }
     }
 
+    /**
+     * Save in favourites for later use.
+     */
     private void saveForLater() {
         new Thread(new Runnable() {
             @Override

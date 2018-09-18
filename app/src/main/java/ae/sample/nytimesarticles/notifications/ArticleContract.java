@@ -75,5 +75,6 @@ public final class ArticleContract {
      * found in multiple tables.
      */
     public static interface CommonColumns
-            extends BaseColumns {  }
+            extends BaseColumns {
+    }
 }

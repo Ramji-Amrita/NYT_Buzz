@@ -18,7 +18,9 @@ import ae.sample.nytimesarticles.ui.fragments.ArticlesListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * Recycle View Adapter for Handling Views
+ */
 public class PopularArticlesRecyclerViewAdapter extends RecyclerView.Adapter<PopularArticlesRecyclerViewAdapter.MyViewHolder> {
 
     private List<PopularArticles> popularArticles;
@@ -57,12 +59,20 @@ public class PopularArticlesRecyclerViewAdapter extends RecyclerView.Adapter<Pop
         return popularArticles.size();
     }
 
+    /**
+     * Set Articles from outside and refresh the list
+     *
+     * @param articlesList Articles List
+     */
     public void setArticlesList(List<PopularArticles> articlesList) {
         popularArticles = articlesList;
         notifyDataSetChanged();
     }
 
 
+    /**
+     * Custom View Holder
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_article_icon)
         com.androidnetworking.widget.ANImageView imgArticleIcon;

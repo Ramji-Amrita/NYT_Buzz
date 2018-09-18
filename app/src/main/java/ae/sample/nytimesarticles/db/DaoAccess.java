@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Created by Farooq Arshed on 8/8/18.
+ * <p>
+ * Class for Accessing the database
  */
 @Dao
 public interface DaoAccess {
@@ -18,9 +20,20 @@ public interface DaoAccess {
     @Insert
     void insertArticle(ArticleModel movies);
 
+    /**
+     * Query database to get one article
+     *
+     * @param articleId Article Id
+     * @return Fetched Article Model otherwise null
+     */
     @Query("SELECT*FROM ArticleModel WHERE articleId =:articleId")
     ArticleModel fetchOneArticleByArticleId(long articleId);
 
+    /**
+     * Query database to get all saved articles
+     *
+     * @return List of Articles saved
+     */
     @Query("SELECT*FROM ArticleModel")
     List<ArticleModel> fetchAllArticle();
 
@@ -32,9 +45,19 @@ public interface DaoAccess {
     @Query("SELECT * FROM ArticleModel")
     Cursor selectAll();
 
+    /**
+     * Update database to save articles
+     *
+     * @param articleModel Articles Model to update
+     */
     @Update
-    void updateArticle(ArticleModel movies);
+    void updateArticle(ArticleModel articleModel);
 
+    /**
+     * Delete the article from database
+     *
+     * @param articleModel Article Model to delete
+     */
     @Delete
-    void deleteArticle(ArticleModel movies);
+    void deleteArticle(ArticleModel articleModel);
 }

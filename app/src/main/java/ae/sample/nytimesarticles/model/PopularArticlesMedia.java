@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Response Model for Popular Articles
+ */
 public class PopularArticlesMedia  implements Serializable {
 
     @SerializedName("type")

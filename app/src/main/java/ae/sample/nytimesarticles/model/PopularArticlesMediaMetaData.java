@@ -4,6 +4,9 @@ package ae.sample.nytimesarticles.model;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
+/**
+ * Response Model for Popular Articles
+ */
 public class PopularArticlesMediaMetaData implements Serializable {
 
     @SerializedName("url")

@@ -25,6 +25,9 @@ public class NYTimesArticlesApplication extends Application {
         }
     }
 
+    /**
+     * Creating channel to display notification.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createChannel() {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -25,8 +25,6 @@ public class NotificationIntentService extends JobIntentService {
     private static final String ACTION_START = "ACTION_START";
     public static final String CHANNEL_ID = "Notifciation_Channel";
 
-    private NotificationManagerCompat notificationManager = null;
-
     public NotificationIntentService() {
         super();
     }
@@ -45,6 +43,13 @@ public class NotificationIntentService extends JobIntentService {
         }
     }
 
+    /**
+     * Create Notification Service
+     *
+     * @param context Context
+     * @param bundle  Bundle to pass to Service
+     * @return Intent
+     */
     public static Intent createIntentNotificationService(Context context, Bundle bundle) {
         Intent intent = new Intent(context, NotificationIntentService.class);
         intent.setAction(ACTION_START);
@@ -52,8 +57,13 @@ public class NotificationIntentService extends JobIntentService {
         return intent;
     }
 
+    /**
+     * Process the data and display the notification
+     *
+     * @param data Data to process
+     */
     private void processStartNotification(Bundle data) {
-        notificationManager = NotificationManagerCompat.from(getApplicationContext());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("data", data);
 
@@ -73,7 +83,6 @@ public class NotificationIntentService extends JobIntentService {
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
         stopSelf();
-
     }
 
 }

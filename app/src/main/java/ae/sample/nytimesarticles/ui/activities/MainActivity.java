@@ -8,6 +8,9 @@ import ae.sample.nytimesarticles.R;
 
 import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTICLE_TITLE;
 
+/**
+ * Starting point of the app.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

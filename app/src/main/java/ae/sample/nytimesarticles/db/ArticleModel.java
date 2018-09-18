@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 
 /**
  * Created by Farooq Arshed on 8/8/18.
+ * <p>
+ * Database Model Class
  */
 @Entity
 public class ArticleModel {

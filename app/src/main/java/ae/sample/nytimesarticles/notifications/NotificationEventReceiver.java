@@ -18,6 +18,12 @@ public class NotificationEventReceiver extends BroadcastReceiver {
     private static final int NOTIFICATIONS_INTERVAL_IN_MILLISECONDS = 2 * 1000 * 60;
     private int JOB_ID = 0x7b;
 
+    /**
+     * Setup the alarm for notification.
+     *
+     * @param context
+     * @param bundle
+     */
     public static void setupAlarm(Context context, Bundle bundle) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
@@ -41,6 +47,13 @@ public class NotificationEventReceiver extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Get the correct Pending Intent with correct values.
+     *
+     * @param context Context
+     * @param bundle  Bundle to be passed to Pending Intent.
+     * @return Pending Intent
+     */
     private static PendingIntent getPendingIntent(Context context, Bundle bundle) {
         Intent intent = new Intent(context, NotificationEventReceiver.class);
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);

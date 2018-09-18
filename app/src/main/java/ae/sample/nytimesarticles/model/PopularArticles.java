@@ -6,7 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class PopularArticles  implements Serializable {
+/**
+ * Response Model for Popular Articles
+ */
+public class PopularArticles implements Serializable {
 
     @SerializedName("url")
     private String url;
@@ -50,7 +53,7 @@ public class PopularArticles  implements Serializable {
     @SerializedName("media")
     private List<PopularArticlesMedia> media = null;
 
-   public String getUrl() {
+    public String getUrl() {
         return url;
     }
 

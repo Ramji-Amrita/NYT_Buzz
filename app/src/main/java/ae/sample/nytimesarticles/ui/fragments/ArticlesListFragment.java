@@ -27,7 +27,9 @@ import butterknife.ButterKnife;
 
 import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTICLE_URL;
 
-
+/**
+ * Fragment to load and display the list of the articles.
+ */
 public class ArticlesListFragment extends Fragment implements ArticleClickListener {
 
     private static final String URL_POPULAR_ARTICLES = "http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=cd2506cf35504016a7579eea094ad1bd";
@@ -60,6 +62,9 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
         return view;
     }
 
+    /**
+     * Initialize UI elements
+     */
     private void initializeUI() {
         mProgressBar.setVisibility(View.VISIBLE);
         mAdapter = new PopularArticlesRecyclerViewAdapter(new ArrayList<PopularArticles>(), this);
@@ -68,6 +73,9 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
         articlesList.setAdapter(mAdapter);
     }
 
+    /**
+     * Load the articles
+     */
     private void loadArticles() {
         AndroidNetworking.get(URL_POPULAR_ARTICLES)
                 .addPathParameter("pageNumber", "0")
@@ -90,6 +98,11 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
                 });
     }
 
+    /**
+     * Recieve which item is clicked.
+     *
+     * @param article
+     */
     @Override
     public void onArticleCardClickListener(PopularArticles article) {
         DetailArticleFragment fragment = DetailArticleFragment.newInstance(article);

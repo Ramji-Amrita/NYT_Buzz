@@ -1,10 +1,14 @@
 
 package ae.sample.nytimesarticles.model;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * Response Model for Popular Articles
+ */
 public class PopularArticlesResponse implements Serializable {
 
     @SerializedName("status")
