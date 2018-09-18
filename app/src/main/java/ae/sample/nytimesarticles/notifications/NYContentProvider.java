@@ -15,7 +15,6 @@ import ae.sample.nytimesarticles.db.ArticleDatabase;
  * Created by Farooq Arshed on 8/8/18.
  */
 public class NYContentProvider extends ContentProvider {
-    private ArticleContract mHelper;
     // prepare the UriMatcher
     private static final UriMatcher URI_MATCHER;
     private static final int ITEM_LIST = 1;
@@ -28,7 +27,6 @@ public class NYContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mHelper = new ArticleContract(getContext());
         return true;
     }
 
