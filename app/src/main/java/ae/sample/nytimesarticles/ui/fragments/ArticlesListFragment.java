@@ -32,7 +32,7 @@ import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTIC
  */
 public class ArticlesListFragment extends Fragment implements ArticleClickListener {
 
-    private static final String URL_POPULAR_ARTICLES = "http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=cd2506cf35504016a7579eea094ad1bd";
+    private static final String URL_POPULAR_ARTICLES = "http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=cd2506cf35504016a7579eea094ad1bd";
 
     @BindView(R.id.rv_articlelist)
     RecyclerView articlesList;

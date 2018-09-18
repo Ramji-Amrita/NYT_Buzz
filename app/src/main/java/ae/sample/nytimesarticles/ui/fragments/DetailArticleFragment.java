@@ -120,15 +120,10 @@ public class DetailArticleFragment extends Fragment {
      */
     public class ArticleBrowser extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mProgressBar.setVisibility(View.INVISIBLE);
+            favouriteButton.setVisible(true);
         }
     }
 
@@ -141,6 +136,7 @@ public class DetailArticleFragment extends Fragment {
         inflater.inflate(R.menu.main, menu);
 
         favouriteButton = menu.findItem(R.id.saveLater);
+        favouriteButton.setVisible(false);
     }
 
     @Override
