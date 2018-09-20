@@ -2,6 +2,8 @@ package ae.sample.nytimesarticles.ui.fragments;
 
 import android.app.Fragment;
 import android.arch.persistence.room.Room;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,9 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.androidnetworking.widget.ANImageView;
 
 import ae.sample.nytimesarticles.R;
 import ae.sample.nytimesarticles.db.ArticleDatabase;
@@ -21,6 +23,7 @@ import ae.sample.nytimesarticles.model.PopularArticles;
 import ae.sample.nytimesarticles.notifications.NotificationEventReceiver;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Fragment to load the details of the article
@@ -32,16 +35,24 @@ public class DetailArticleFragment extends Fragment {
     public static String ARTICLE_URL = "articleUrl";
 
     private static String ARTICLE = "article";
-    private String articleURLPath;
     private static final String DATABASE_NAME = "article_db";
     private ArticleDatabase articleDatabase;
     private boolean isFavourite;
 
-    @BindView(R.id.wv_article_detail)
-    WebView webView;
+    @BindView(R.id.imageView)
+    ANImageView imageView;
 
-    @BindView(R.id.pb_spin)
-    ProgressBar mProgressBar;
+    @BindView(R.id.titleTxtView)
+    TextView titleTxtView;
+
+    @BindView(R.id.authorTxtView)
+    TextView authorTxtView;
+
+    @BindView(R.id.dateTxtView)
+    TextView dateTxtView;
+
+    @BindView(R.id.abstractTxtView)
+    TextView abstractTxtView;
 
     private PopularArticles article;
     private ArticleModel articleModel;
@@ -65,7 +76,6 @@ public class DetailArticleFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             article = (PopularArticles) getArguments().getSerializable(ARTICLE);
-            articleURLPath = article.getUrl();
         }
         setHasOptionsMenu(true);
 
@@ -99,6 +109,7 @@ public class DetailArticleFragment extends Fragment {
                             favouriteButton.setIcon(R.drawable.ic_favorite_filled);
                             isFavourite = true;
                         }
+                        favouriteButton.setVisible(true);
                     }
                 });
             }
@@ -109,22 +120,11 @@ public class DetailArticleFragment extends Fragment {
      * Initialize the UI on the page.
      */
     private void initializeUI() {
-        mProgressBar.setVisibility(View.VISIBLE);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new ArticleBrowser());
-        webView.loadUrl(articleURLPath);
-    }
-
-    /**
-     * Custom Webview client to display and hide the loader.
-     */
-    public class ArticleBrowser extends WebViewClient {
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            mProgressBar.setVisibility(View.INVISIBLE);
-            favouriteButton.setVisible(true);
-        }
+        imageView.setImageUrl(article.getMedia().get(0).getMediaMetadata().get(0).getUrl());
+        titleTxtView.setText(article.getTitle());
+        authorTxtView.setText(article.getByline());
+        dateTxtView.setText(article.getPublishedDate());
+        abstractTxtView.setText(article.getAbstract());
     }
 
     private MenuItem favouriteButton;
@@ -191,5 +191,11 @@ public class DetailArticleFragment extends Fragment {
         b.putLong(ARTICLE_ID, article.getId());
         b.putString(ARTICLE_URL, article.getUrl());
         NotificationEventReceiver.setupAlarm(getActivity(), b);
+    }
+
+    @OnClick(R.id.readFullButton)
+    public void readFullArticle() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.getUrl()));
+        startActivity(browserIntent);
     }
 }

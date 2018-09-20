@@ -3,6 +3,7 @@ package ae.sample.nytimesarticles.ui.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ae.sample.nytimesarticles.R;
 import ae.sample.nytimesarticles.adapters.PopularArticlesRecyclerViewAdapter;
@@ -25,7 +27,7 @@ import ae.sample.nytimesarticles.model.PopularArticlesResponse;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTICLE_URL;
+import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTICLE_ID;
 
 /**
  * Fragment to load and display the list of the articles.
@@ -33,6 +35,8 @@ import static ae.sample.nytimesarticles.ui.fragments.DetailArticleFragment.ARTIC
 public class ArticlesListFragment extends Fragment implements ArticleClickListener {
 
     private static final String URL_POPULAR_ARTICLES = "http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=cd2506cf35504016a7579eea094ad1bd";
+
+    private long articleId = -1;
 
     @BindView(R.id.rv_articlelist)
     RecyclerView articlesList;
@@ -46,8 +50,11 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            Log.d("asd", "ARTICLE_URL:: " + getArguments().containsKey(ARTICLE_URL));
+        if (getActivity().getIntent() != null && getActivity().getIntent().hasExtra("data")) {
+            Bundle data = getActivity().getIntent().getBundleExtra("data");
+            if (data != null) {
+                articleId = data.getLong(ARTICLE_ID);
+            }
         }
     }
 
@@ -87,6 +94,20 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
                 .getAsObject(PopularArticlesResponse.class, new ParsedRequestListener<PopularArticlesResponse>() {
                     @Override
                     public void onResponse(PopularArticlesResponse articlesResponse) {
+                        if (articleId != -1) {
+                            PopularArticles article = searchForArticle(articlesResponse.getpopularArticles());
+                            if (article == null) {
+                                Snackbar.make(getView(), "Could not find the article.", Snackbar.LENGTH_SHORT).show();
+                                loadData(articlesResponse);
+                            } else {
+                                onArticleCardClickListener(article);
+                            }
+                        } else {
+                            loadData(articlesResponse);
+                        }
+                    }
+
+                    private void loadData(PopularArticlesResponse articlesResponse) {
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mAdapter.setArticlesList(articlesResponse.getpopularArticles());
                     }
@@ -111,6 +132,18 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
         fragmentTransaction.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
         fragmentTransaction.commit();
+    }
+
+    private PopularArticles searchForArticle(List<PopularArticles> articlesList) {
+        PopularArticles result = null;
+        for (PopularArticles article :
+                articlesList) {
+            if (article.getId() == articleId) {
+                result = article;
+                break;
+            }
+        }
+        return result;
     }
 
 }
