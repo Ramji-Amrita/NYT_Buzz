@@ -64,9 +64,13 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
         View view = inflater.inflate(R.layout.fragment_articles_list, container, false);
         ButterKnife.bind(this, view);
         initializeUI();
-        loadArticles();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadArticles();
     }
 
     /**
@@ -98,13 +102,12 @@ public class ArticlesListFragment extends Fragment implements ArticleClickListen
                             PopularArticles article = searchForArticle(articlesResponse.getpopularArticles());
                             if (article == null) {
                                 Snackbar.make(getView(), "Could not find the article.", Snackbar.LENGTH_SHORT).show();
-                                loadData(articlesResponse);
                             } else {
                                 onArticleCardClickListener(article);
                             }
-                        } else {
-                            loadData(articlesResponse);
+                            articleId = -1;
                         }
+                        loadData(articlesResponse);
                     }
 
                     private void loadData(PopularArticlesResponse articlesResponse) {

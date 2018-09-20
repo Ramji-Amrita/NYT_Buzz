@@ -148,6 +148,7 @@ public class DetailArticleFragment extends Fragment {
                     saveForLater();
                 } else {
                     favouriteButton.setIcon(R.drawable.ic_favorite);
+                    isFavourite = false;
                     removeFavourite();
                 }
                 return true;
