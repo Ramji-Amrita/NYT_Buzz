@@ -13,4 +13,4 @@
  - Service
 
 ***URL***
- - http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=cd2506cf35504016a7579eea094ad1bd
+ - http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=S95Xs91J8CEJr1fOMfz4MfKT6E3TiSzn
